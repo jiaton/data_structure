@@ -62,7 +62,7 @@ void out_Q(SqQueue Q) {
 	}
 	else {
 		printf("队列中的数据为：\n");
-		for (int i = Q.front; (i + MAXSIZE) % MAXSIZE < Q.rear; i=(i+1+MAXSIZE)%MAXSIZE) {
+		for (int i = Q.front; i != Q.rear; i = (i + 1 + MAXSIZE) % MAXSIZE) {
 			printf("%d ", Q.a[i]);
 		}
 
