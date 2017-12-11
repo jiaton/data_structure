@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 /*   二叉树的建立与遍历  */
 # include <stdio.h>
 # include <stdlib.h>
@@ -14,7 +15,7 @@ void inorder(BiTNode *p);
 void numb(BiTNode *p);
 BiTNode *t; int n, n0, n1, n2;
 /*  主函数 */
-main()
+int main()
 {
 	char ch; int k;
 	do {
@@ -53,8 +54,7 @@ main()
   /* 利用二叉树性质5 ，借助一维数组V 建立二叉树 */
 BiTNode *creat_bt1()
 {
-	BiTNode *t, *p, *v[20]; int i, j; Etype e;
-	/* 输入结点的序号i 、结点的数据e  */
+	BiTNode *t, *p, *v[20]; int i, j; Etype e; /* 输入结点的序号i 、结点的数据e  */
 	printf("\n i,data=?"); scanf("%d%d", &i, &e);
 	while (i != 0 && e != 0)              /* 当 i ,e都为0时，结束循环  */
 	{
@@ -67,7 +67,7 @@ BiTNode *creat_bt1()
 			if (i % 2 == 0) v[j]->lch = p; /* 序号为偶数，做左孩子*/
 			else   v[j]->rch = p;  /* 序号为奇数，做右孩子*/
 		}
-		printf("\n i,data=?"); scanf("%d,%d", &i, &e);
+		printf("\n i,data=?"); scanf("%d%d", &i,&e);
 	} 
 	return(t);
 } /* creat_bt1 */
@@ -95,6 +95,14 @@ void inorder(BiTNode *p)
 		inorder(p->rch);
 	}
 } /* inorder  */
+//先序遍历
+void firstorder(BiTNode *p) {
+	if (p) {
+		printf("%3d", p->data);
+		firstorder(p->lch);
+		firstorder(p->rch);
+	}
+}
   /* 利用中序递归遍历二叉树的方法，计算树中结点个数 */
   /* 读者可以试着运用先序或后序递归遍历二叉树方法重新编写这一段函数 */
 void numb(BiTNode *p)
@@ -110,3 +118,14 @@ void numb(BiTNode *p)
 		numb(p->rch);
 	}
 } /* numb  */
+void numb_first(BiTNode *p) {
+	if (p) {
+		printf("%3d", p->data);
+		n++;
+		if (p->lch == NULL&&p->rch == NULL) n0++;
+		if ((p->lch == NULL && p->rch != NULL) || (p->lch != NULL && p->rch == NULL)) n1++;
+		if (p->lch != NULL && p->rch != NULL) n2++;
+		numb_first(p->lch);
+		numb_first(p->rch);
+	}
+}//先序遍历统计节点
