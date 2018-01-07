@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "矩阵", "矩阵\矩阵.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "图操作1", "图操作1\图操作1.vcxproj", "{7CC2D73A-B9AA-4DEF-B33B-95E02C9877A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "图操作2", "图操作2\图操作2.vcxproj", "{A67572FC-66CF-42B0-9E57-F6B12FB33428}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "实验七 查找", "实验七 查找\实验七 查找.vcxproj", "{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +75,22 @@ Global
 		{7CC2D73A-B9AA-4DEF-B33B-95E02C9877A3}.Release|x64.Build.0 = Release|x64
 		{7CC2D73A-B9AA-4DEF-B33B-95E02C9877A3}.Release|x86.ActiveCfg = Release|Win32
 		{7CC2D73A-B9AA-4DEF-B33B-95E02C9877A3}.Release|x86.Build.0 = Release|Win32
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Debug|x64.ActiveCfg = Debug|x64
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Debug|x64.Build.0 = Debug|x64
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Debug|x86.ActiveCfg = Debug|Win32
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Debug|x86.Build.0 = Debug|Win32
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Release|x64.ActiveCfg = Release|x64
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Release|x64.Build.0 = Release|x64
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Release|x86.ActiveCfg = Release|Win32
+		{A67572FC-66CF-42B0-9E57-F6B12FB33428}.Release|x86.Build.0 = Release|Win32
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Debug|x64.ActiveCfg = Debug|x64
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Debug|x64.Build.0 = Debug|x64
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Debug|x86.ActiveCfg = Debug|Win32
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Debug|x86.Build.0 = Debug|Win32
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Release|x64.ActiveCfg = Release|x64
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Release|x64.Build.0 = Release|x64
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Release|x86.ActiveCfg = Release|Win32
+		{8E2CD589-1DF5-41F0-A6A8-6E5E91452F53}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
