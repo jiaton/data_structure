@@ -113,7 +113,8 @@ int main() {
 	scanf("%d", &order);
 	printf("你查找的元素为%d", index);
 	LocateSqList(&l, index);
-	printf("\n输入你想插入的元素以及序位:<用逗号隔开>"); 	scanf("%d,%d", &index, &order);
+	printf("\n输入你想插入的元素以及序位:<用逗号隔开>");
+	scanf("%d,%d", &index, &order);
 	listinsert(&l, index, order);
 	printf("插入数据之后的顺序表如下：\n");
 	PrintSqList(&l);
