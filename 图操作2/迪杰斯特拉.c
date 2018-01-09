@@ -1,75 +1,123 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 1000000
-int arcs[10][10];//邻接矩阵
-int D[10];//保存最短路径长度
-int p[10][10];//路径
-int final[10];//若final[i] = 1则说明 顶点vi已在集合S中
-int n = 0;//顶点个数
-int v0 = 0;//源点
-int v, w;
-void ShortestPath_DIJ()
+
+#define MAXVEX 9
+#define INFINITY 65535
+
+typedef int Patharc[MAXVEX];  //存放最短路径上的结点编号
+typedef int ShortPathTable[MAXVEX]; //各节点到源点的路径(经过中间结点)长度
+
+typedef struct MGraph {
+	int numVertexes;
+	int *vex;
+	int arc[MAXVEX][MAXVEX];
+}MGraph;
+
+void ShortestPath_Dijkstra(MGraph *G, int v0, int vv, Patharc *P, ShortPathTable *D)
 {
-	int i = 0, min = 0;
-	for (v = 0; v < n; v++) //循环 初始化
+	int v, w, k, min;
+	int result[MAXVEX];
+
+	int n = 0;
+
+	for (v = 0; v<G->numVertexes; ++v)
 	{
-		final[v] = 0;
-		D[v] = arcs[v0][v];
-		for (w = 0; w < n; w++)
-			p[v][w] = 0;//设空路径
-		if (D[v] < MAX)
+		result[v] = 0;
+		(*D)[v] = G->arc[v0][v];  //初始化，其余各节点到源点的距离
+		(*P)[v] = -1;
+	}
+	(*D)[v0] = 0;
+	result[v0] = 1; //源点加入
+	(*P)[n++] = v0;
+
+	for (v = 0; v<G->numVertexes; ++v)
+	{
+		min = INFINITY;
+		for (w = 0; w<G->numVertexes; ++w) //寻找未加入的所有结点中到源点距离最短的结点k
 		{
-			p[v][v0] = 1;
-			p[v][v] = 1;
+			if (!result[w] && (*D)[w]<min)
+			{
+				k = w;
+				min = (*D)[w];
+			}
+		}
+		result[k] = 1; //结点k加入
+		(*P)[n++] = k;
+
+		//判断是否到达终点
+		if (k == vv)
+			break;
+
+		for (w = 0; w<G->numVertexes; ++w) //更新其余各节点到源点的距离的距离数组
+		{
+			//if(!result[w] && (min+G->arc[k][w]<(*D)[w])) //新节点w到源点的距离=k到源点的距离+k到w的距离
+			if (!result[w])
+			{
+				(*D)[w] = min + G->arc[k][w];
+				//(*P)[w]=k;
+			}
 		}
 	}
-	D[v0] = 0;
-	final[v0] = 0; //初始化 v0顶点属于集合S
-				   //开始主循环 每次求得v0到某个顶点v的最短路径 并加v到集合S中
-	for (i = 1; i < n; i++)
+	//输出结果
+	printf("\n");
+	for (v = 0; v<G->numVertexes; ++v)
 	{
-		min = MAX;
-		for (w = 0; w < n; w++)
-		{
-			//我认为的核心过程--选点
-			if (!final[w]) //如果w顶点在V-S中
-			{
-				//这个过程最终选出的点 应该是选出当前V-S中与S有关联边
-				//且权值最小的顶点 书上描述为 当前离V0最近的点
-				if (D[w] < min) { v = w; min = D[w]; }
-			}
-		}
-		final[v] = 1; //选出该点后加入到合集S中
-		for (w = 0; w < n; w++)//更新当前最短路径和距离
-		{
-			/*在此循环中 v为当前刚选入集合S中的点
-			则以点V为中间点 考察 d0v+dvw 是否小于 D[w] 如果小于 则更新
-			比如加进点 3 则若要考察 D[5] 是否要更新 就 判断 d(v0-v3) + d(v3-v5) 的和是否小于D[5]
-			*/
-			if (!final[w] && (min + arcs[v][w]<D[w]))
-			{
-				D[w] = min + arcs[v][w];
-				// p[w] = p[v];
-				p[w][w] = 1; //p[w] = p[v] +　[w]
-			}
-		}
+		if ((*P)[v] == -1) break;
+		printf("%d-->", (*P)[v]);
 	}
 }
 
-
-int main()
+void main()
 {
+	MGraph *my_g = (struct MGraph*)malloc(sizeof(struct MGraph));
 	int i, j;
-	scanf("%d", &n);                                    //顶点个数
-	for (i = 0; i < n; i++)
-	{
-		for (j = 0; j < n; j++)
+	int t = 0;
+
+	int v0 = 0;
+	int vv = 8;
+
+	my_g->numVertexes = 9;
+	my_g->vex = (int*)malloc(sizeof(char)*my_g->numVertexes);
+	if (!my_g->vex) return;
+	for (i = 0; i<my_g->numVertexes; ++i)  //一维数组(图中各结点)初始化{0,1,2,3,4,5,6,7,8}  
+		my_g->vex[i] = i++;
+
+	for (i = 0; i<my_g->numVertexes; ++i)
+		for (j = 0; j<my_g->numVertexes; ++j)
+			my_g->arc[i][j] = INFINITY;
+
+	// 无向图的权值二维数组为对称矩阵
+	my_g->arc[0][1] = 1;  my_g->arc[0][2] = 5;
+	my_g->arc[1][2] = 3;  my_g->arc[1][3] = 7;  my_g->arc[1][4] = 5;
+	my_g->arc[2][4] = 1;  my_g->arc[2][5] = 7;
+	my_g->arc[3][4] = 2;  my_g->arc[3][6] = 3;
+	my_g->arc[4][5] = 3;  my_g->arc[4][6] = 6;  my_g->arc[4][7] = 9;
+	my_g->arc[5][7] = 5;
+	my_g->arc[6][7] = 2;  my_g->arc[6][8] = 7;
+	my_g->arc[7][8] = 4;
+	for (i = 0; i<my_g->numVertexes; ++i)
+		for (j = 0; j <= i; ++j)
 		{
-			scanf("%d", &arcs[i][j]);                  //用来存储邻接矩阵
+			if (i == j)
+			{
+				my_g->arc[i][j] = 0;
+				continue;
+			}
+			my_g->arc[i][j] = my_g->arc[j][i];
 		}
+	for (i = 0; i<my_g->numVertexes; ++i)  //二维数组表示图中各结点间连接边的weight  
+	{
+		for (j = 0; j<my_g->numVertexes; ++j)
+			printf("%5d  ", my_g->arc[i][j]);
+		printf("\n");
 	}
-	ShortestPath_DIJ();
-	for (i = 0; i < n; i++)
-		printf("D[%d] = %d\n", i, D[i]);
-	return 0;
+	printf("\n\n");
+
+
+	Patharc P;
+	ShortPathTable D;
+	ShortestPath_Dijkstra(my_g, v0, vv, &P, &D);
+
+	free(my_g->vex);
+	//free(my_g->arc);
 }
